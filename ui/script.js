@@ -43,18 +43,6 @@ function initApp() {
         dotsContainer.appendChild(dot);
     });
 
-    // Nav buttons
-    const prevBtn = document.getElementById('nav-prev');
-    const nextBtn = document.getElementById('nav-next');
-
-    // Hide nav buttons when needed
-    function updateNavButtons() {
-        if (prevBtn) prevBtn.style.visibility = currentIndex <= 0 ? 'hidden' : 'visible';
-        if (nextBtn) nextBtn.style.visibility = currentIndex >= beers.length - 1 ? 'hidden' : 'visible';
-    }
-
-    updateNavButtons();
-
     // Update dots on scroll
     carousel.addEventListener('scroll', () => {
         const cards = carousel.querySelectorAll('.carousel-card');
@@ -68,24 +56,52 @@ function initApp() {
             dots[currentIndex].classList.remove('active');
             currentIndex = newIndex;
             dots[currentIndex].classList.add('active');
-            updateNavButtons();
         }
     });
 
-    if (prevBtn && nextBtn) {
-        prevBtn.onclick = () => {
-            if (currentIndex > 0) {
-                const cards = carousel.querySelectorAll('.carousel-card');
-                cards[currentIndex - 1].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-            }
-        };
-        nextBtn.onclick = () => {
-            const cards = carousel.querySelectorAll('.carousel-card');
-            if (currentIndex < cards.length - 1) {
-                cards[currentIndex + 1].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-            }
-        };
+    // Touch & mouse drag swipe support
+    let startX = 0;
+    let isDragging = false;
+
+    function onPointerDown(e) {
+        startX = e.touches ? e.touches[0].clientX : e.clientX;
+        isDragging = true;
     }
+
+    function onPointerMove(e) {
+        if (!isDragging) return;
+        // Prevent vertical scroll while swiping horizontally
+        if (e.touches && Math.abs((e.touches[0].clientX) - startX) > 10) {
+            e.preventDefault();
+        }
+    }
+
+    function onPointerEnd(e) {
+        if (!isDragging) return;
+        isDragging = false;
+        const endX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+        const diff = endX - startX;
+        const threshold = 50;
+
+        if (Math.abs(diff) < threshold) return;
+
+        const cards = carousel.querySelectorAll('.carousel-card');
+        if (diff < 0 && currentIndex < cards.length - 1) {
+            // Swipe left -> next
+            cards[currentIndex + 1].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        } else if (diff > 0 && currentIndex > 0) {
+            // Swipe right -> prev
+            cards[currentIndex - 1].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+    }
+
+    carousel.addEventListener('touchstart', onPointerDown, { passive: true });
+    carousel.addEventListener('touchmove', onPointerMove, { passive: false });
+    carousel.addEventListener('touchend', onPointerEnd);
+    carousel.addEventListener('mousedown', onPointerDown);
+    carousel.addEventListener('mousemove', onPointerMove);
+    carousel.addEventListener('mouseup', onPointerEnd);
+    carousel.addEventListener('mouseleave', () => { isDragging = false; });
 
     // Loading -> Catalog after 3,5 seconds
     setTimeout(() => {
