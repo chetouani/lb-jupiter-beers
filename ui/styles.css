@@ -245,6 +245,11 @@ body {
     padding: 14rem 0.5rem 1rem;
     align-items: center;
     scrollbar-width: none;
+    cursor: grab;
+}
+
+.carousel:active {
+    cursor: grabbing;
 }
 
 .carousel::-webkit-scrollbar {
