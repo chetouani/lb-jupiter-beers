@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Bières Catalog</title>
+        <link rel="stylesheet" href="styles.css" />
+        <link rel="stylesheet" href="colors.css" />
+        <link rel="stylesheet" href="frame.css" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet" />
+    </head>
+    <body>
+        <div id="phone-wrapper">
+            <div class="app" id="content">
+
+                <!-- Loading Screen -->
+                <div id="loading-screen" class="screen active">
+                    <div class="loading-content">
+                        <img class="loading-logo" src="assets/jupiter-icon-no-bg.png" alt="Jupiter" />
+                        <div class="orbit orbit-1"><span class="star">★</span></div>
+                        <div class="orbit orbit-2"><span class="star">★</span></div>
+                        <div class="orbit orbit-3"><span class="star">★</span></div>
+                        <div class="orbit orbit-4"><span class="star">★</span></div>
+                        <div class="orbit orbit-5"><span class="bubble">○</span></div>
+                        <div class="orbit orbit-6"><span class="bubble">○</span></div>
+                    </div>
+                </div>
+
+                <!-- Catalog Screen -->
+                <div id="catalog-screen" class="screen">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-row">
+                            <button class="nav-btn" id="nav-prev">‹</button>
+                            <div class="carousel" id="carousel"></div>
+                            <button class="nav-btn" id="nav-next">›</button>
+                        </div>
+                        <div class="carousel-dots" id="carousel-dots"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <script src="dev.js"></script>
+        <script>
+            function loadApp() {
+                if (document.getElementById('script-loaded')) return;
+                const script = document.createElement('script');
+                script.src = 'script.js';
+                script.id = 'script-loaded';
+                document.body.appendChild(script);
+            }
+
+            window.addEventListener('message', (e) => {
+                if (e.data === 'componentsLoaded') {
+                    loadApp();
+                }
+            });
+
+            // Fallback for browser testing
+            window.addEventListener('load', () => {
+                setTimeout(loadApp, 100);
+            });
+        </script>
+    </body>
+</html>

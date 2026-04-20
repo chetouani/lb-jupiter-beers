@@ -1,0 +1,41 @@
+:root {
+    --background-primary: #f5f5f5;
+    --background-highlight: rgb(220, 220, 220);
+
+    --text-primary: #1a1a1a;
+    --text-secondary: #6b6b6b;
+
+    --accent: #d4880f;
+
+    --card-bg: #ffffff;
+    --card-shadow: rgba(0, 0, 0, 0.08);
+
+    --dot-inactive: #ccc;
+
+    --loading-bg-start: #fdf6e3;
+    --loading-bg-end: #f5e6c8;
+    --loading-text: #7a5c2e;
+    --spinner-track: rgba(180, 140, 60, 0.2);
+    --spinner-color: #d4880f;
+}
+
+[data-theme='dark'] {
+    --background-primary: #000000;
+    --background-highlight: rgb(30, 30, 30);
+
+    --text-primary: #f2f2f7;
+    --text-secondary: #8e8e93;
+
+    --accent: #e6a020;
+
+    --card-bg: #1c1c1e;
+    --card-shadow: rgba(0, 0, 0, 0.4);
+
+    --dot-inactive: #444;
+
+    --loading-bg-start: #1a1400;
+    --loading-bg-end: #2a1e05;
+    --loading-text: #d4a84b;
+    --spinner-track: rgba(200, 160, 60, 0.15);
+    --spinner-color: #e6a020;
+}

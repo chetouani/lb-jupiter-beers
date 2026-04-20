@@ -1,0 +1,116 @@
+const beers = [
+    { name: "Jupiter", style: "Pilsner", description: "Une Jupiter légère et rafraîchissante, parfaite pour toutes les occasions.", img: "assets/beer-bottle-jupiter.png", alcool: 5.2, bootlePriceExcVat: 350, canPriceExcVat: 250 },
+    { name: "Rayon", style: "Strong Ale", description: "Une bière robuste avec des notes maltées profondes et une légère touche caramélisée.", img: "assets/beer-bottle-rayon.png", alcool: 8.7, bootlePriceExcVat: 350, canPriceExcVat: 250 },
+    { name: "M27", style: "Pale Lager", description: "Une lager légère mais puissante, avec une touche légèrement amère et sucrée.", img: "assets/beer-bottle-m27.png", alcool: 6.9, bootlePriceExcVat: 350, canPriceExcVat: 250 },
+    { name: "Solaris", style: "Blonde", description: "Une blonde dorée avec un goût équilibré entre douceur et amertume.", img: "assets/beer-bottle-solaris.png", alcool: 7.8, bootlePriceExcVat: 350, canPriceExcVat: 2505 },
+    { name: "Gravité 24,79", style: "Barleywine", description: "Une bière ultra forte avec des saveurs complexes et intenses, à boire avec modération.", img: "assets/beer-bottle-gravite.png", alcool: 24.79, bootlePriceExcVat: 350, canPriceExcVat: 250 }
+];
+
+function initApp() {
+    const carousel = document.querySelector('.carousel');
+    const dotsContainer = document.querySelector('.carousel-dots');
+
+    if (!carousel || !dotsContainer) {
+        // DOM not ready yet (dev.js may still be restructuring), retry
+        setTimeout(initApp, 50);
+        return;
+    }
+
+    let currentIndex = 0;
+
+    beers.forEach((beer, i) => {
+        const card = document.createElement('div');
+        card.className = 'carousel-card';
+        card.innerHTML = `
+            <img class="card-img" src="${beer.img}" alt="${beer.name}" />
+            <div class="card-body">
+                <div class="card-name">${beer.name}</div>
+                <div class="card-style">${beer.style}</div>
+                <div class="card-desc">${beer.description}</div>
+                <div class="card-stats">
+                    <div class="card-stat">${beer.alcool}%</div>
+                </div>
+            </div>
+        `;
+        carousel.appendChild(card);
+
+        const dot = document.createElement('span');
+        dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+        dot.onclick = () => {
+            const cards = carousel.querySelectorAll('.carousel-card');
+            cards[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        };
+        dotsContainer.appendChild(dot);
+    });
+
+    // Nav buttons
+    const prevBtn = document.getElementById('nav-prev');
+    const nextBtn = document.getElementById('nav-next');
+
+    // Hide nav buttons when needed
+    function updateNavButtons() {
+        if (prevBtn) prevBtn.style.visibility = currentIndex <= 0 ? 'hidden' : 'visible';
+        if (nextBtn) nextBtn.style.visibility = currentIndex >= beers.length - 1 ? 'hidden' : 'visible';
+    }
+
+    updateNavButtons();
+
+    // Update dots on scroll
+    carousel.addEventListener('scroll', () => {
+        const cards = carousel.querySelectorAll('.carousel-card');
+        const dots = dotsContainer.querySelectorAll('.carousel-dot');
+        const scrollLeft = carousel.scrollLeft;
+        const cardWidth = cards[0].offsetWidth;
+        const gap = 12;
+        const newIndex = Math.round(scrollLeft / (cardWidth + gap));
+
+        if (newIndex !== currentIndex && newIndex >= 0 && newIndex < beers.length) {
+            dots[currentIndex].classList.remove('active');
+            currentIndex = newIndex;
+            dots[currentIndex].classList.add('active');
+            updateNavButtons();
+        }
+    });
+
+    if (prevBtn && nextBtn) {
+        prevBtn.onclick = () => {
+            if (currentIndex > 0) {
+                const cards = carousel.querySelectorAll('.carousel-card');
+                cards[currentIndex - 1].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            }
+        };
+        nextBtn.onclick = () => {
+            const cards = carousel.querySelectorAll('.carousel-card');
+            if (currentIndex < cards.length - 1) {
+                cards[currentIndex + 1].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            }
+        };
+    }
+
+    // Loading -> Catalog after 3,5 seconds
+    setTimeout(() => {
+        document.getElementById('loading-screen').classList.remove('active');
+        document.getElementById('catalog-screen').classList.add('active');
+        // Center first card
+        const firstCard = carousel.querySelector('.carousel-card');
+        if (firstCard) {
+            setTimeout(() => {
+                firstCard.scrollIntoView({ behavior: 'instant', inline: 'center', block: 'nearest' });
+            }, 50);
+        }
+    }, 3500);
+
+    // Theme support (lb-phone APIs)
+    if (typeof onSettingsChange === 'function') {
+        onSettingsChange((settings) => {
+            document.querySelector('.app').dataset.theme = settings.display.theme;
+        });
+    }
+    if (typeof getSettings === 'function') {
+        getSettings().then((settings) => {
+            document.querySelector('.app').dataset.theme = settings.display.theme;
+        });
+    }
+}
+
+initApp();
