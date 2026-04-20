@@ -24,6 +24,7 @@ function initApp() {
         card.innerHTML = `
             <img class="card-img" src="${beer.img}" alt="${beer.name}" />
             <div class="card-body">
+                <button class="card-heart" data-beer="${beer.name}" aria-label="Vote for ${beer.name}">♡</button>
                 <div class="card-name">${beer.name}</div>
                 <div class="card-style">${beer.style}</div>
                 <div class="card-desc">${beer.description}</div>
@@ -31,7 +32,6 @@ function initApp() {
                     <div class="card-stat">${beer.alcool}%</div>
                 </div>
             </div>
-            <button class="card-heart" data-beer="${beer.name}" aria-label="Vote for ${beer.name}">♡</button>
         `;
         carousel.appendChild(card);
 

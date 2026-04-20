@@ -261,7 +261,7 @@ body {
 .card-heart {
     background: none;
     border: none;
-    font-size: 1.6rem;
+    font-size: 2.2rem;
     color: var(--text-secondary);
     cursor: pointer;
     transition: transform 0.25s ease, color 0.25s ease;
