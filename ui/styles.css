@@ -214,6 +214,7 @@ body {
     height: 16rem;
     margin-top: -2rem;
     overflow: hidden;
+    position: relative;
 }
 
 .card-name {
@@ -264,7 +265,9 @@ body {
     color: var(--text-secondary);
     cursor: pointer;
     transition: transform 0.25s ease, color 0.25s ease;
-    margin-top: auto;
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
     padding: 0.2rem 0.5rem;
 }
 

@@ -30,8 +30,8 @@ function initApp() {
                 <div class="card-stats">
                     <div class="card-stat">${beer.alcool}%</div>
                 </div>
-                <button class="card-heart" data-beer="${beer.name}" aria-label="Vote for ${beer.name}">♡</button>
             </div>
+            <button class="card-heart" data-beer="${beer.name}" aria-label="Vote for ${beer.name}">♡</button>
         `;
         carousel.appendChild(card);
 
