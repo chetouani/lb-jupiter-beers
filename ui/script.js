@@ -1,9 +1,9 @@
 const beers = [
-    { name: "Jupiter", style: "Pilsner", description: "Une Jupiter légère et rafraîchissante, parfaite pour toutes les occasions.", img: "assets/beer-bottle-jupiter.png", alcool: 5.2, bootlePriceExcVat: 350, canPriceExcVat: 250 },
-    { name: "Rayon", style: "Strong Ale", description: "Une bière robuste avec des notes maltées profondes et une légère touche caramélisée.", img: "assets/beer-bottle-rayon.png", alcool: 8.7, bootlePriceExcVat: 350, canPriceExcVat: 250 },
-    { name: "M27", style: "Pale Lager", description: "Une lager légère mais puissante, avec une touche légèrement amère et sucrée.", img: "assets/beer-bottle-m27.png", alcool: 6.9, bootlePriceExcVat: 350, canPriceExcVat: 250 },
-    { name: "Solaris", style: "Blonde", description: "Une blonde dorée avec un goût équilibré entre douceur et amertume.", img: "assets/beer-bottle-solaris.png", alcool: 7.8, bootlePriceExcVat: 350, canPriceExcVat: 2505 },
-    { name: "Gravité 24,79", style: "Barleywine", description: "Une bière ultra forte avec des saveurs complexes et intenses, à boire avec modération.", img: "assets/beer-bottle-gravite.png", alcool: 24.79, bootlePriceExcVat: 350, canPriceExcVat: 250 }
+    { name: "Jupiter", style: "Pilsner", description: "Une Jupiter légère et rafraîchissante, parfaite pour toutes les occasions.", img: "assets/beer-bottle-jupiter.png", alcool: 5.2, bottlePriceExcVat: 350, canPriceExcVat: 250 },
+    { name: "Rayon", style: "Strong Ale", description: "Une bière robuste avec des notes maltées profondes et une légère touche caramélisée.", img: "assets/beer-bottle-rayon.png", alcool: 8.7, bottlePriceExcVat: 350, canPriceExcVat: 250 },
+    { name: "M27", style: "Pale Lager", description: "Une lager légère mais puissante, avec une touche légèrement amère et sucrée.", img: "assets/beer-bottle-m27.png", alcool: 6.9, bottlePriceExcVat: 350, canPriceExcVat: 250 },
+    { name: "Solaris", style: "Blonde", description: "Une blonde dorée avec un goût équilibré entre douceur et amertume.", img: "assets/beer-bottle-solaris.png", alcool: 7.8, bottlePriceExcVat: 350, canPriceExcVat: 250 },
+    { name: "Gravité 24,79", style: "Barleywine", description: "Une bière ultra forte avec des saveurs complexes et intenses, à boire avec modération.", img: "assets/beer-bottle-gravite.png", alcool: 24.79, bottlePriceExcVat: 350, canPriceExcVat: 250 }
 ];
 
 function initApp() {
