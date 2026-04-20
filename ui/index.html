@@ -27,6 +27,13 @@
                     </div>
                 </div>
 
+                <!-- Tab Bar -->
+                <div class="tab-bar" id="tab-bar">
+                    <button class="tab-btn active" data-screen="catalog-screen">🍺 Catalogue</button>
+                    <button class="tab-btn" data-screen="votes-screen">🏆 Votes</button>
+                    <button class="tab-btn" data-screen="dealers-screen">🏪 Revendeurs</button>
+                </div>
+
                 <!-- Catalog Screen -->
                 <div id="catalog-screen" class="screen">
                     <div class="carousel-wrapper">
@@ -34,6 +41,23 @@
                             <div class="carousel" id="carousel"></div>
                         </div>
                         <div class="carousel-dots" id="carousel-dots"></div>
+                    </div>
+                </div>
+
+                <!-- Votes Screen -->
+                <div id="votes-screen" class="screen">
+                    <div class="votes-header">Classement</div>
+                    <div class="votes-container">
+                        <div class="votes-list" id="votes-list"></div>
+                        <div class="votes-overlay">Bientôt disponible</div>
+                    </div>
+                </div>
+
+                <!-- Dealers Screen -->
+                <div id="dealers-screen" class="screen">
+                    <div class="votes-header">Revendeurs</div>
+                    <div class="votes-container">
+                        <div class="votes-overlay">Bientôt disponible</div>
                     </div>
                 </div>
 
