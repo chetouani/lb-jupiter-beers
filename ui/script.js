@@ -43,18 +43,6 @@ function initApp() {
         dotsContainer.appendChild(dot);
     });
 
-    // Nav buttons
-    const prevBtn = document.getElementById('nav-prev');
-    const nextBtn = document.getElementById('nav-next');
-
-    // Hide nav buttons when needed
-    function updateNavButtons() {
-        if (prevBtn) prevBtn.style.visibility = currentIndex <= 0 ? 'hidden' : 'visible';
-        if (nextBtn) nextBtn.style.visibility = currentIndex >= beers.length - 1 ? 'hidden' : 'visible';
-    }
-
-    updateNavButtons();
-
     // Update dots on scroll
     carousel.addEventListener('scroll', () => {
         const cards = carousel.querySelectorAll('.carousel-card');
@@ -68,7 +56,6 @@ function initApp() {
             dots[currentIndex].classList.remove('active');
             currentIndex = newIndex;
             dots[currentIndex].classList.add('active');
-            updateNavButtons();
         }
     });
 
@@ -115,21 +102,6 @@ function initApp() {
     carousel.addEventListener('mousemove', onPointerMove);
     carousel.addEventListener('mouseup', onPointerEnd);
     carousel.addEventListener('mouseleave', () => { isDragging = false; });
-
-    if (prevBtn && nextBtn) {
-        prevBtn.onclick = () => {
-            if (currentIndex > 0) {
-                const cards = carousel.querySelectorAll('.carousel-card');
-                cards[currentIndex - 1].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-            }
-        };
-        nextBtn.onclick = () => {
-            const cards = carousel.querySelectorAll('.carousel-card');
-            if (currentIndex < cards.length - 1) {
-                cards[currentIndex + 1].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-            }
-        };
-    }
 
     // Loading -> Catalog after 3,5 seconds
     setTimeout(() => {
