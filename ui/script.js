@@ -30,6 +30,7 @@ function initApp() {
                 <div class="card-stats">
                     <div class="card-stat">${beer.alcool}%</div>
                 </div>
+                <button class="card-heart" data-beer="${beer.name}" aria-label="Vote for ${beer.name}">♡</button>
             </div>
         `;
         carousel.appendChild(card);
@@ -41,6 +42,15 @@ function initApp() {
             cards[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
         };
         dotsContainer.appendChild(dot);
+    });
+
+    // Heart vote toggle
+    carousel.addEventListener('click', (e) => {
+        const heart = e.target.closest('.card-heart');
+        if (!heart) return;
+        e.stopPropagation();
+        const isActive = heart.classList.toggle('active');
+        heart.textContent = isActive ? '♥' : '♡';
     });
 
     // Update dots on scroll

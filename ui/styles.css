@@ -256,6 +256,33 @@ body {
     padding: 0.3rem 0.8rem;
 }
 
+/* ===== HEART VOTE ===== */
+.card-heart {
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: transform 0.25s ease, color 0.25s ease;
+    margin-top: auto;
+    padding: 0.2rem 0.5rem;
+}
+
+.card-heart:hover {
+    transform: scale(1.2);
+}
+
+.card-heart.active {
+    color: #e74c3c;
+    animation: heartPop 0.35s ease;
+}
+
+@keyframes heartPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.4); }
+    100% { transform: scale(1); }
+}
+
 /* ===== DOTS ===== */
 .carousel-dots {
     display: flex;
