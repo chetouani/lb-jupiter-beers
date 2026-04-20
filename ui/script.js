@@ -9,12 +9,16 @@ const beers = [
 function initApp() {
     const carousel = document.querySelector('.carousel');
     const dotsContainer = document.querySelector('.carousel-dots');
+    const tabBar = document.getElementById('tab-bar');
 
-    if (!carousel || !dotsContainer) {
-        // DOM not ready yet (dev.js may still be restructuring), retry
+    if (!carousel || !dotsContainer || !tabBar) {
         setTimeout(initApp, 50);
         return;
     }
+
+    // Vote tracking
+    const votes = {};
+    beers.forEach(b => votes[b.name] = 0);
 
     let currentIndex = 0;
 
@@ -24,6 +28,9 @@ function initApp() {
         card.innerHTML = `
             <img class="card-img" src="${beer.img}" alt="${beer.name}" />
             <div class="card-body">
+                <button class="card-heart" data-beer="${beer.name}" aria-label="Vote for ${beer.name}">
+                    <svg viewBox="0 0 24 24" width="28" height="28"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </button>
                 <div class="card-name">${beer.name}</div>
                 <div class="card-style">${beer.style}</div>
                 <div class="card-desc">${beer.description}</div>
@@ -41,6 +48,16 @@ function initApp() {
             cards[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
         };
         dotsContainer.appendChild(dot);
+    });
+
+    // Heart vote toggle
+    carousel.addEventListener('click', (e) => {
+        const heart = e.target.closest('.card-heart');
+        if (!heart) return;
+        e.stopPropagation();
+        const beerName = heart.dataset.beer;
+        const isActive = heart.classList.toggle('active');
+        votes[beerName] += isActive ? 1 : -1;
     });
 
     // Update dots on scroll
@@ -103,10 +120,43 @@ function initApp() {
     carousel.addEventListener('mouseup', onPointerEnd);
     carousel.addEventListener('mouseleave', () => { isDragging = false; });
 
+    // Tab navigation
+    function renderVotes() {
+        const list = document.getElementById('votes-list');
+        list.innerHTML = '';
+        const sorted = beers.slice().sort((a, b) => votes[b.name] - votes[a.name]);
+        sorted.forEach((beer, i) => {
+            const row = document.createElement('div');
+            row.className = 'vote-row';
+            row.innerHTML = `
+                <span class="vote-rank">${i + 1}</span>
+                <img class="vote-img" src="${beer.img}" alt="${beer.name}" />
+                <div class="vote-info">
+                    <span class="vote-name">${beer.name}</span>
+                    <span class="vote-style">${beer.style}</span>
+                </div>
+                <span class="vote-count">♥ ${votes[beer.name]}</span>
+            `;
+            list.appendChild(row);
+        });
+    }
+
+    tabBar.addEventListener('click', (e) => {
+        const btn = e.target.closest('.tab-btn');
+        if (!btn) return;
+        const targetId = btn.dataset.screen;
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(targetId).classList.add('active');
+        tabBar.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        if (targetId === 'votes-screen') renderVotes();
+    });
+
     // Loading -> Catalog after 3,5 seconds
     setTimeout(() => {
         document.getElementById('loading-screen').classList.remove('active');
         document.getElementById('catalog-screen').classList.add('active');
+        tabBar.style.display = 'flex';
         // Center first card
         const firstCard = carousel.querySelector('.carousel-card');
         if (firstCard) {
